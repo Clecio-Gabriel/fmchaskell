@@ -1,7 +1,7 @@
 module FMCBabyNat where
 
 -- Do not alter this import!
-import Prelude ( Show(..) , Eq(..) , undefined )
+import Prelude ( Show(..) , Eq(..) , undefined, Num (negate) )
 
 -- Define evenerything that is undefined,
 -- without using standard Haskell functions.
@@ -62,10 +62,14 @@ odd (S (S x)) = odd x
 -- It behaves like subtraction, except that it returns 0
 -- when "normal" subtraction would return a negative number.
 monus :: Nat -> Nat -> Nat
-monus = undefined
+monus O _ = O --BASE (∀ n) 0-*n=0
+monus n O = n
+monus (S x) (S y) = monus x y
+
 
 (-*) :: Nat -> Nat -> Nat
 (-*) = monus
+infixl 6 -*
 
 -- multiplication
 (*) :: Nat -> Nat -> Nat
