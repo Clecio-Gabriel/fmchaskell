@@ -32,13 +32,16 @@ n + S m = S (n + m)
  -- syntactic precedence: 6
 infixl 6 +
 
--- Output: O means False, S O means True
+-- Output: O means False, S O means True 
+--FINISHED
 isZero :: Nat -> Nat
-isZero = undefined
+isZero O = S O
+isZero _ = O
 
 -- pred is the predecessor but we define zero's to be zero
 pred :: Nat -> Nat
-pred = undefined
+pred O = O
+pred (S x) = x
 
 -- Output: O means False, S O means True
 even :: Nat -> Nat
