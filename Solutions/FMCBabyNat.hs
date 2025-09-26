@@ -39,16 +39,23 @@ isZero O = S O
 isZero _ = O
 
 -- pred is the predecessor but we define zero's to be zero
+--FINISHED
 pred :: Nat -> Nat
 pred O = O
 pred (S x) = x
 
 -- Output: O means False, S O means True
+--FINISHED
 even :: Nat -> Nat
-even = undefined
+even O = S O
+even (S O) = O
+even (S (S x)) = even x
 
+--FINISHED
 odd :: Nat -> Nat
-odd = undefined
+odd O = O
+odd (S O) = S O
+odd (S (S x)) = odd x
 
 -- This is called the dotminus or monus operator
 -- (also: proper subtraction, arithmetic subtraction, ...).
