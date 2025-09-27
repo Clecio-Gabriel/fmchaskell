@@ -61,17 +61,19 @@ odd (S (S x)) = odd x
 -- (also: proper subtraction, arithmetic subtraction, ...).
 -- It behaves like subtraction, except that it returns 0
 -- when "normal" subtraction would return a negative number.
+--FINISHED
 monus :: Nat -> Nat -> Nat
 monus O _ = O --BASE (∀ n) 0-*n=0
 monus n O = n
 monus (S x) (S y) = monus x y
 
-
+--FINISHED
 (-*) :: Nat -> Nat -> Nat
 (-*) = monus
 infixl 6 -*
 
 -- multiplication
+--FINISHED
 (*) :: Nat -> Nat -> Nat
 n * O = O
 n * (S O) = n
@@ -81,8 +83,11 @@ n * (S x) = n + (n * x)
 infixl 7 *
 
 -- exponentiation
+--FINISHED
 (^) :: Nat -> Nat -> Nat
-(^) = undefined
+_ ^ O = S O
+n ^ (S O) = n
+n ^ (S x) = n * (n ^ x)
 
 -- decide: infix? ? ^
 
