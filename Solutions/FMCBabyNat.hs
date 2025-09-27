@@ -93,7 +93,17 @@ n ^ (S x) = n * (n ^ x)
 
 -- quotient
 (/) :: Nat -> Nat -> Nat
-(/) = undefined
+O / _ = O --zero é divisível por todos
+n / S O = n --um divide todos
+
+--ARGUMENTO:
+-- x / y 
+-- S (S (S (S O))) / S (S O)
+-- = S (S O)
+-- S (S (S O)) / S (S O) 
+-- = S O
+-- S (S (S (S (S (S O))))) / S (S (S O))
+-- = S (S O)
 
 -- remainder
 (%) :: Nat -> Nat -> Nat
