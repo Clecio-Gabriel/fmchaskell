@@ -73,7 +73,10 @@ infixl 6 -*
 
 -- multiplication
 (*) :: Nat -> Nat -> Nat
-(*) = undefined
+n * O = O
+n * (S O) = n
+n * (S x) = n + (n * x)
+
 
 infixl 7 *
 
