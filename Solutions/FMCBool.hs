@@ -68,7 +68,7 @@ infixr 2 <=/=>
 
 -- boolean negation
 not :: Bool -> Bool
-not x = ifThenElse True False True 
+not x = ifThenElse x False True 
 
 -- if-then-else expression
 ifThenElse :: Bool -> a -> a -> a
