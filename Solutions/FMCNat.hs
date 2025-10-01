@@ -73,17 +73,25 @@ eight = S seven
 ----------------------------------------------------------------
 
 isZero :: Nat -> Bool
-isZero = undefined
+isZero O = True
+isZero _ = False
 
 -- pred is the predecessor but we define zero's to be zero
 pred :: Nat -> Nat
-pred = undefined
+pred O = O
+pred (S n) = n
 
 even :: Nat -> Bool
-even = undefined
+even n = case n of
+        O -> True
+        S O -> False
+        S (S n) -> even n
 
 odd :: Nat -> Bool
-odd = undefined
+odd n = case n of
+        O -> False
+        S O -> True
+        S (S n) -> odd n
 
 
 ----------------------------------------------------------------
@@ -92,7 +100,9 @@ odd = undefined
 
 -- addition
 (<+>) :: Nat -> Nat -> Nat
-(<+>) = undefined
+n <+> m = case m of
+        0 -> n
+        S m -> S (n <+> m)
 
 -- This is called the dotminus or monus operator
 -- (also: proper subtraction, arithmetic subtraction, ...).
@@ -179,7 +189,7 @@ instance Num Nat where
 
     (+) = (<+>)
     (*) = (<*>)
-    (-) = (<->)
+    (-) = (-*)
     abs n = n
     signum = sg
     fromInteger x

@@ -1,7 +1,7 @@
 module FMCBabyNat where
 
 -- Do not alter this import!
-import Prelude ( Show(..) , Eq(..) , undefined, Num (negate) )
+import Prelude ( Show(..) , Eq(..) , undefined, Num (negate), read )
 
 -- Define evenerything that is undefined,
 -- without using standard Haskell functions.
@@ -25,8 +25,9 @@ eight = S seven
 
 -- addition
 (+) :: Nat -> Nat -> Nat
-n + O   = n
-n + S m = S (n + m)
+n + m = case m of
+        O -> n
+        S m -> S (n + m)
 
  -- syntactic associativity: L
  -- syntactic precedence: 6
@@ -91,14 +92,24 @@ n ^ (S x) = n * (n ^ x)
 
 -- decide: infix? ? ^
 
+eucdiv :: Nat -> Nat -> (Nat, Nat) --    eucdiv(f,g) = (q,r) ⇔ f = g·q + r
+eucdiv O _ = (O,O)    --zero é divisível a todos
+eucdiv f (S O) = (f,O)  --o um divide a todos
+eucdiv f g = undefined
+
+
+--pelo algoritmo de euclides
+  -- 4/2 ⇒ 4 = 2·q + r, q = 2 & r = 0
+              
+
 -- quotient
 (/) :: Nat -> Nat -> Nat
-O / _ = O --zero é divisível por todos
-n / S O = n --um divide todos
+f/g = q
+      where 
+        (q,_) = eucdiv f g
 
 --ARGUMENTO:
--- x / y 
--- S (S (S (S O))) / S (S O)
+-- S (S (S (S O))) / S (S O) four/two
 -- = S (S O)
 -- S (S (S O)) / S (S O) 
 -- = S O
@@ -107,7 +118,9 @@ n / S O = n --um divide todos
 
 -- remainder
 (%) :: Nat -> Nat -> Nat
-(%) = undefined
+f%g = r
+      where
+        (_,r) = eucdiv f g
 
 -- divides
 -- just for a change, we start by defining the "symbolic" operator
@@ -129,7 +142,9 @@ factorial = undefined
 
 -- signum of a number (-1, 0, or 1)
 sg :: Nat -> Nat
-sg = undefined
+sg O = O
+sg _ = S O
+--there's no -1 in our world of Nats
 
 -- lo b a is the floor of the logarithm base b of a
 lo :: Nat -> Nat -> Nat
