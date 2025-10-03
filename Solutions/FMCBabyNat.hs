@@ -92,20 +92,25 @@ n ^ (S x) = n * (n ^ x)
 
 -- decide: infix? ? ^
 
+--SUM OF ELEMENTS IN TWO DISTINCT TUPLES
+(-+-) :: (Nat, Nat) -> (Nat, Nat) -> (Nat, Nat)
+(x,y) -+- (w,z) = (x+w,y+z)
+
 eucdiv :: Nat -> Nat -> (Nat, Nat) --    eucdiv(f,g) = (q,r) ⇔ f = g·q + r
 eucdiv O _ = (O,O)    --zero é divisível a todos
-eucdiv f (S O) = (f,O)  --o um divide a todos
-eucdiv f g = undefined
-
-
+eucdiv f g = (O, O) -+- case f-*g of
+                          S _ -> (S O, O) -+- eucdiv (f-*g) g
+                          O -> case g-*f of
+                                O -> (O, O)
+                                S _ -> (O, f)
+--FINALMENTE AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 --pelo algoritmo de euclides
   -- 4/2 ⇒ 4 = 2·q + r, q = 2 & r = 0
               
 
 -- quotient
 (/) :: Nat -> Nat -> Nat
-f/g = q
-      where 
+f/g = q where 
         (q,_) = eucdiv f g
 
 --ARGUMENTO:
@@ -118,8 +123,7 @@ f/g = q
 
 -- remainder
 (%) :: Nat -> Nat -> Nat
-f%g = r
-      where
+f%g = r where
         (_,r) = eucdiv f g
 
 -- divides
