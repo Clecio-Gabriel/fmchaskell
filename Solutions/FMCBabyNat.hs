@@ -29,8 +29,8 @@ n + m = case m of
         O -> n
         S m -> S (n + m)
 
- -- syntactic associativity: L
- -- syntactic precedence: 6
+-- syntactic associativity: L
+-- syntactic precedence: 6
 infixl 6 +
 
 -- Output: O means False, S O means True 
@@ -101,7 +101,7 @@ eucdiv O _ = (O,O)    --zero é divisível a todos
 eucdiv f g = (O, O) -+- case f-*g of
                           S _ -> (S O, O) -+- eucdiv (f-*g) g
                           O -> case g-*f of
-                                O -> (O, O)
+                                O -> (S O, O)
                                 S _ -> (O, f)
 --FINALMENTE AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 --pelo algoritmo de euclides
@@ -109,6 +109,7 @@ eucdiv f g = (O, O) -+- case f-*g of
               
 
 -- quotient
+--FINALIZADO
 (/) :: Nat -> Nat -> Nat
 f/g = q where 
         (q,_) = eucdiv f g
