@@ -22,6 +22,7 @@ five  = S four
 six   = S five
 seven = S six
 eight = S seven
+nine = S eight
 
 -- addition
 (+) :: Nat -> Nat -> Nat
@@ -132,18 +133,26 @@ f%g = r where
 -- and then define `devides` as a synonym to it
 -- again, outputs: O means False, S O means True
 (|||) :: Nat -> Nat -> Nat
-(|||) = undefined
+f ||| g = case f%g of
+          O -> S O
+          S _ -> O
+          
 
 -- x `absDiff` y = |x - y|
 -- (Careful here: this - is the actual minus operator we know from the integers!)
 absDiff :: Nat -> Nat -> Nat
-absDiff = undefined
+absDiff x y = case x-*y of
+              S x -> S x
+              O -> case y-*x of
+                  O -> O
+                  S x -> S x
 
 (|-|) :: Nat -> Nat -> Nat
 (|-|) = absDiff
 
 factorial :: Nat -> Nat
-factorial = undefined
+factorial (S O) = S O
+factorial n = n * factorial (n -* S O)
 
 -- signum of a number (-1, 0, or 1)
 sg :: Nat -> Nat
@@ -153,5 +162,8 @@ sg _ = S O
 
 -- lo b a is the floor of the logarithm base b of a
 lo :: Nat -> Nat -> Nat
-lo = undefined
+lo b a = undefined
+
+--dado um log 2 10 = log 2 2 + log 2 5 
+--                 = 1 + log 2 2 + log 2 2.5
 
