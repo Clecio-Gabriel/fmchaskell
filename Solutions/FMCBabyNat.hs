@@ -97,11 +97,11 @@ n ^ (S x) = n * (n ^ x)
 (-+-) :: (Nat, Nat) -> (Nat, Nat) -> (Nat, Nat)
 (x,y) -+- (w,z) = (x+w,y+z)
 
+--FINALIZADO
 eucdiv :: Nat -> Nat -> (Nat, Nat) --    eucdiv(f,g) = (q,r) ⇔ f = g·q + r
 eucdiv _ O = error "division by 0 is not defined"
 eucdiv x y = case x-*y of
-              --S _ -> (S O, O) -+- eucdiv (x-*y) y
-              --let me try to fix it
+              S _ -> (S O, O) -+- eucdiv (x-*y) y
               O -> case y-*x of
                   O -> (S O, O)
                   S _ -> (O, x)
@@ -125,11 +125,13 @@ x / y = q where
 -- = S (S O)
 
 -- remainder
+--FINALIZADO
 (%) :: Nat -> Nat -> Nat
 x % y = r where
         (_,r) = eucdiv x y
 
 -- divides
+-- FINALIZADO
 -- just for a change, we start by defining the "symbolic" operator
 -- and then define `devides` as a synonym to it
 -- again, outputs: O means False, S O means True
@@ -140,6 +142,7 @@ x ||| y = case x % y of
           
 
 -- x `absDiff` y = |x - y|
+-- FINALIZADO
 -- (Careful here: this - is the actual minus operator we know from the integers!)
 absDiff :: Nat -> Nat -> Nat
 absDiff x y = case x-*y of
@@ -151,11 +154,13 @@ absDiff x y = case x-*y of
 (|-|) :: Nat -> Nat -> Nat
 (|-|) = absDiff
 
+--FINALIZADO
 factorial :: Nat -> Nat
 factorial (S O) = S O
 factorial n = n * factorial (n -* S O)
 
 -- signum of a number (-1, 0, or 1)
+-- FINALIZADO
 sg :: Nat -> Nat
 sg O = O
 sg _ = S O
