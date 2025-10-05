@@ -1,7 +1,7 @@
 module FMCBabyNat where
 
 -- Do not alter this import!
-import Prelude ( Show(..) , Eq(..) , undefined, Num (negate), read )
+import Prelude ( Show(..) , Eq(..) , undefined, Num (negate), read, error)
 
 -- Define evenerything that is undefined,
 -- without using standard Haskell functions.
@@ -98,12 +98,13 @@ n ^ (S x) = n * (n ^ x)
 (x,y) -+- (w,z) = (x+w,y+z)
 
 eucdiv :: Nat -> Nat -> (Nat, Nat) --    eucdiv(f,g) = (q,r) ⇔ f = g·q + r
-eucdiv O _ = (O,O)    --zero é divisível a todos
-eucdiv f g = (O, O) -+- case f-*g of
-                          S _ -> (S O, O) -+- eucdiv (f-*g) g
-                          O -> case g-*f of
-                                O -> (S O, O)
-                                S _ -> (O, f)
+eucdiv _ O = error "division by 0 is not defined"
+eucdiv x y = case x-*y of
+              --S _ -> (S O, O) -+- eucdiv (x-*y) y
+              --let me try to fix it
+              O -> case y-*x of
+                  O -> (S O, O)
+                  S _ -> (O, x)
 --FINALMENTE AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 --pelo algoritmo de euclides
   -- 4/2 ⇒ 4 = 2·q + r, q = 2 & r = 0
@@ -112,8 +113,8 @@ eucdiv f g = (O, O) -+- case f-*g of
 -- quotient
 --FINALIZADO
 (/) :: Nat -> Nat -> Nat
-f/g = q where 
-        (q,_) = eucdiv f g
+x / y = q where 
+        (q,_) = eucdiv x y
 
 --ARGUMENTO:
 -- S (S (S (S O))) / S (S O) four/two
@@ -125,15 +126,15 @@ f/g = q where
 
 -- remainder
 (%) :: Nat -> Nat -> Nat
-f%g = r where
-        (_,r) = eucdiv f g
+x % y = r where
+        (_,r) = eucdiv x y
 
 -- divides
 -- just for a change, we start by defining the "symbolic" operator
 -- and then define `devides` as a synonym to it
 -- again, outputs: O means False, S O means True
 (|||) :: Nat -> Nat -> Nat
-f ||| g = case f%g of
+x ||| y = case x % y of
           O -> S O
           S _ -> O
           
@@ -162,8 +163,16 @@ sg _ = S O
 
 -- lo b a is the floor of the logarithm base b of a
 lo :: Nat -> Nat -> Nat
-lo b a = undefined
+lo b a = case b-*a of
+          O -> case a-*b of
+              O -> S O
+              S _ -> undefined
+
 
 --dado um log 2 10 = log 2 2 + log 2 5 
+-- 10 - 2 = S _
 --                 = 1 + log 2 2 + log 2 2.5
+
+--dado um log 10 2
+--2 - 10 = O
 
